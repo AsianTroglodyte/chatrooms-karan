@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Chat Rooms · Anonymous Chat{% endblock %}
+{% block content %}
+<h2>Create a room</h2>
+<form method="post" action="{{ url_for('create_room') }}">
+  <label for="name">Topic</label>
+  <input id="name" name="name" type="text" maxlength="120" required>
+  <button type="submit">Create room</button>
+</form>
+<h2>Chat rooms</h2>
+{% if rooms %}
+  {% for room, message_count, last_activity in rooms %}
+  <section class="room">
+    <h3><a href="{{ url_for('room', room_id=room.id) }}">{{ room.name }}</a></h3>
+    <div class="muted">Created by {{ room.created_by }} · {{ message_count }} message{% if message_count != 1 %}s{% endif %} · Last activity <time datetime="{{ last_activity.isoformat() }}">{{ last_activity.strftime('%Y-%m-%d %H:%M UTC') }}</time></div>
+  </section>
+  {% endfor %}
+{% else %}
+  <p>No rooms yet. Start the first conversation.</p>
+{% endif %}
+{% endblock %}

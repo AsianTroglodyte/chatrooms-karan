@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head %}{% endblock %}
+  <title>{% block title %}Anonymous Chat{% endblock %}</title>
+  <style>
+    body { max-width: 850px; margin: 2rem auto; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; color: #222; }
+    a { color: #075985; } form { margin: 1rem 0; } input, button, textarea { font: inherit; padding: .5rem; }
+    input[type=text], textarea { width: min(100%, 600px); box-sizing: border-box; }
+    button { cursor: pointer; } .room { border-bottom: 1px solid #ddd; padding: 1rem 0; }
+    .muted, time { color: #666; font-size: .9rem; } .flash { padding: .6rem; background: #fff3cd; }
+    .messages { border: 1px solid #ddd; padding: 0 1rem; } .message { border-bottom: 1px solid #eee; padding: .7rem 0; }
+    .message:last-child { border-bottom: 0; } .message p { white-space: pre-wrap; margin: .25rem 0 0; }
+  </style>
+</head>
+<body>
+  <header><h1><a href="{{ url_for('index') }}">Anonymous Chat</a></h1><p class="muted">You are {{ session.nickname }}.</p></header>
+  {% with notices = get_flashed_messages() %}{% for notice in notices %}<p class="flash">{{ notice }}</p>{% endfor %}{% endwith %}
+  {% block content %}{% endblock %}
+</body>
+</html>

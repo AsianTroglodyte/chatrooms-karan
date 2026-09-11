@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block head %}<meta http-equiv="refresh" content="5">{% endblock %}
+{% block title %}{{ room.name }} · Anonymous Chat{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('index') }}">← All rooms</a></p>
+<h2>{{ room.name }}</h2>
+<p class="muted">Created by {{ room.created_by }} · Showing the latest 50 messages · Refreshes every 5 seconds</p>
+<div class="messages">
+{% if messages %}
+  {% for message in messages %}
+  <article class="message">
+    <strong>{{ message.author }}</strong>
+    <time datetime="{{ message.posted_at.isoformat() }}">{{ message.posted_at.strftime('%Y-%m-%d %H:%M UTC') }}</time>
+    <p>{{ message.content }}</p>
+  </article>
+  {% endfor %}
+{% else %}
+  <p>No messages yet. Say hello!</p>
+{% endif %}
+</div>
+<form method="post">
+  <label for="content">Message</label><br>
+  <textarea id="content" name="content" rows="4" maxlength="2000" required></textarea><br>
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}
